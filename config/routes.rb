@@ -56,4 +56,5 @@ Rails.application.routes.draw do
   #   end
 
   root 'dashboard#index'
+  resources :customers, only: [:index]
 end
