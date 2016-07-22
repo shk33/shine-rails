@@ -5,29 +5,19 @@
 
   <section class="search-form">
     <form>
-      <h1>
-        Searched for: <small>{{searchedFor}}</small>
-      </h1>
-      <div class="input-group input-group-lg">
-        <label for="keywords" class="sr-only">Keywords</label>
-        <input  type="text"
-                name="keywords"
-                class="form-control input-lg"
-                placeholder="First Name, Last Name, or Email Address"
-                ng-model="keywords">
-        <span class="input-group-btn">
-          <button class="btn btn-primary btn-lg"
-                  ng-click="search(keywords)">
-                  Find Customers
-          </button>
-        </span>
-      </div>
+      <label for="search.keywords" class="sr-only">Keywords</label>
+      <input  type="text"
+              name="keywords"
+              class="form-control input-lg"
+              placeholder="First Name, Last Name, or Email Address"
+              ng-change="search(keywords,true)"
+              ng-model="keywords">
     </form>
   </section>
 
   <section class="search-results">
     <header>
-      <h1 class="h3">Results</h1>
+      <h1 class="h3">Results: Page {{page + 1}}</h1>
     </header>
     <%= render partial: "pager", locals: {keywords: @keywords, page: @page} %>
     <ol class="list-group">
