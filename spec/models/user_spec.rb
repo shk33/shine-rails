@@ -13,7 +13,6 @@ describe "User" do
       expect {
         user.update_attribute(:email, "foo@bar.com")
       }.to violate_check_constraint(:email_must_be_valid)
-      # }.to raise_error(ActiveRecord::StatementInvalid, /email_must_be_valid/i)
     end
   end
 end
