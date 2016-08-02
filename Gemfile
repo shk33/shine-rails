@@ -24,6 +24,9 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 # Auth
 gem 'devise'
 
+#Angular Rails
+gem 'angular-rails-templates'
+
 # Bower
 gem 'bower-rails'
 
