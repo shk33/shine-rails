@@ -96,22 +96,38 @@
       </div>
       <div class="panel-body" ng-controller="CustomerCreditCardController">
         <div class="row">
-          <div class="col-md-7">
-            <p class="h4">
-              ****-****-****-{{creditCard.lastFour}}
-              <span class="label label-success">
-                {{creditCard.cardType}}
-              </span>
-            </p>
-            <p>
-              <label>Expires:</label>
-              {{creditCard.expirationMonth}}/{{creditCard.expirationYear}}
-            </p>
+
+          <!-- Loading Animation -->
+          <div ng-if="!creditCard.$resolved">
+            <div class="col-md-10 col-md-offset-1">
+              <aside class="progress">
+                <div class="progress-bar progress-bar-striped active"
+                style="width: 100%">
+                  Loading Credit Card Info ...
+                </div>
+              </aside>
+            </div>
           </div>
-          <div class="col-md-5 text-right">
-            <a href="{{creditCard.detailsLink}}" target="blank" class="btn btn-lg btn-default">
-              View Details...
-            </a>
+
+          <!-- Credit Card Info -->
+          <div ng-if="creditCard.$resolved">
+            <div class="col-md-7">
+              <p class="h4">
+                ****-****-****-{{creditCard.lastFour}}
+                <span class="label label-success">
+                  {{creditCard.cardType}}
+                </span>
+              </p>
+              <p>
+                <label>Expires:</label>
+                {{creditCard.expirationMonth}}/{{creditCard.expirationYear}}
+              </p>
+            </div>
+            <div class="col-md-5 text-right">
+              <a href="{{creditCard.detailsLink}}" target="blank" class="btn btn-lg btn-default">
+                View Details...
+              </a>
+            </div>
           </div>
         </div>
         <div class="well well-sm">
