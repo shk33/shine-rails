@@ -1,178 +1,190 @@
-<div class="row">
-  <div class="col-md-6">
-    <div class="panel panel-primary">
-      <div class="panel-heading">
-        <h1 class="h4">Customer</h1>
-      </div>
-      <div class="panel-body">
-        <div class="row">
-          <div class="col-md-4">
-            <div class="form-group">
-              <label class="sr-only" for="first-name">First Name</label>
-              <input type="text" class="form-control"
-              name="first-name" ng-model="customer.first_name">
+<form novalidate name="form">
+  <div class="row">
+    <div class="col-md-6">
+      <div class="panel panel-primary">
+        <div class="panel-heading">
+          <h1 class="h4">Customer</h1>
+        </div>
+        <div class="panel-body">
+          <div class="row">
+            <div class="col-md-4">
+              <div class="form-group">
+                <label class="sr-only" for="first-name">First Name</label>
+                <input type="text" class="form-control"
+                name="first-name" ng-model="customer.first_name" required>
+              </div>
             </div>
-          </div>
-          <div class="col-md-4">
-            <div class="form-group">
-              <label class="sr-only" for="last-name">Last Name</label>
-              <input type="text" class="form-control"
-              name="last-name" ng-model="customer.last_name">
+            <div class="col-md-4">
+              <div class="form-group">
+                <label class="sr-only" for="last-name">Last Name</label>
+                <input type="text" class="form-control"
+                name="last-name" ng-model="customer.last_name">
+              </div>
             </div>
-          </div>
-          <div class="col-md-4">
-            <div class="form-group">
-              <div class="input-group">
-                <div class="input-group-addon">@</div>
-                <input type="text" class="form-control" name="username" ng-model="customer.username">
+            <div class="col-md-4">
+              <div class="form-group">
+                <div class="input-group">
+                  <div class="input-group-addon">@</div>
+                  <input type="text" class="form-control" name="username" ng-model="customer.username">
+                </div>
               </div>
             </div>
           </div>
-        </div>
-        <div class="form-group">
-          <label class="sr-only" for="email">Email</label>
-          <input type="text" class="form-control"
-          name="email" ng-model="customer.email">
-        </div>
-      </div>
-      <div class="panel-footer">
-        <label for="joined">Joined</label> 
-        {{customer.joined_at | date }}
-      </div>
-    </div>
-
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h2 class="h4">Shipping Address</h2>
-      </div>
-      <div class="panel-body">
-        <div class="form-group">
-          <label class="sr-only" for="street-address">
-            Street Address
-          </label>
-          <input type="text" class="form-control" 
-          name="street-address" ng-model="customer.shipping_street">
-        </div>
-        <div class="form-group">
-          <label class="sr-only" for="street-address-extra">
-            Street Address Extra
-          </label>
-          <input type="text" class="form-control"
-          name="street-address-extra" value="" placeholder="Extras Address">
-        </div>
-        <div class="row">
-          <div class="col-md-6">
-            <div class="form-group">
-              <label class="sr-only" for="city">City</label>
-              <input type="text" class="form-control"
-              name="city" ng-model="customer.shipping_city">
-            </div>
+          <div class="form-group has-feedback" ng-class="{
+            'has-error':   form.email.$invalid && form.email.$dirty,
+            'has-success': form.email.$valid && form.email.$touched
+          }">
+            <label class="sr-only" for="email">Email</label>
+            <input type="email" class="form-control"
+            name="email" ng-model="customer.email">
+            <p class="help-block" ng-messages="form.email.$error">
+              <span ng-message="required">Email is required</span>
+              <span ng-message="email">Email must look like an email</span>
+            </p>
           </div>
-          <div class="col-md-2">
-            <div class="form-group">
-              <label class="sr-only" for="state">State</label>
-              <input type="text" class="form-control"
-              name="state" ng-model="customer.shipping_state">
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="form-group">
-              <label class="sr-only" for="zip">Zip</label>
-              <input type="text" class="form-control"
-              name="zip" ng-model="customer.shipping_zipcode">
-            </div>
-          </div>
+        </div>
+        <div class="panel-footer">
+          <label for="joined">Joined</label> 
+          {{customer.joined_at | date }}
         </div>
       </div>
 
-    </div>
-
-  </div>
-
-  <div class="col-md-6">
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h2 class="h4">Billing Info</h2>
-      </div>
-      <div class="panel-body" ng-controller="CustomerCreditCardController" ng-init="setCardholderId(customerId)">
-        <div class="row">
-
-          <!-- Loading Animation -->
-          <div ng-if="!creditCard.$resolved">
-            <div class="col-md-10 col-md-offset-1">
-              <aside class="progress">
-                <div class="progress-bar progress-bar-striped active"
-                style="width: 100%">
-                  Loading Credit Card Info ...
-                </div>
-              </aside>
-            </div>
-          </div>
-
-          <!-- Credit Card Info -->
-          <div ng-if="creditCard.$resolved">
-            <div class="col-md-7">
-              <p class="h4">
-                ****-****-****-{{creditCard.lastFour}}
-                <span class="label label-success">
-                  {{creditCard.cardType}}
-                </span>
-              </p>
-              <p>
-                <label>Expires:</label>
-                {{creditCard.expirationMonth}}/{{creditCard.expirationYear}}
-              </p>
-            </div>
-            <div class="col-md-5 text-right">
-              <a href="{{creditCard.detailsLink}}" target="blank" class="btn btn-lg btn-default">
-                View Details...
-              </a>
-            </div>
-          </div>
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h2 class="h4">Shipping Address</h2>
         </div>
-        <div class="well well-sm">
-          <header>
-            <h1 class="h5">Billing Address <input type="checkbox"> Same as shipping?</h1>
-          </header>
+        <div class="panel-body">
           <div class="form-group">
             <label class="sr-only" for="street-address">
               Street Address
             </label>
             <input type="text" class="form-control" 
-            name="street-address" ng-model="customer.billing_street">
-          </div>
-          <div class="form-group">
-            <label class="sr-only" for="street-address-extra">
-              Street Address Extra
-            </label>
-            <input type="text" class="form-control"
-            name="street-address-extra" placeholder="Extras Billing Adress">
+            name="street-address" ng-model="customer.shipping_street">
           </div>
           <div class="row">
             <div class="col-md-6">
               <div class="form-group">
                 <label class="sr-only" for="city">City</label>
                 <input type="text" class="form-control"
-                name="city" ng-model="customer.billing_city">
+                name="city" ng-model="customer.shipping_city">
               </div>
             </div>
             <div class="col-md-2">
               <div class="form-group">
                 <label class="sr-only" for="state">State</label>
                 <input type="text" class="form-control"
-                name="state" ng-model="customer.billing_state">
+                name="state" ng-model="customer.shipping_state"
+                required pattern="[A-Z][A-Z]">
               </div>
             </div>
             <div class="col-md-4">
-              <div class="form-group">
+              <div class="form-group has-feedback" ng-class="{
+                'has-error':   form.shippingZip.$invalid && form.shippingZip.$dirty,
+                'has-success': form.shippingZip.$valid   && form.shippingZip.$touched
+              }">
                 <label class="sr-only" for="zip">Zip</label>
                 <input type="text" class="form-control"
-                name="zip" ng-model="customer.billing_zipcode">
+                name="shippingZip" ng-model="customer.shipping_zipcode"
+                required pattern="\d\d\d\d\d">
+                <p class="help-block" ng-messages="form.shippingZip.$error">
+                  <span ng-message="required">Zip is required</span>
+                  <span ng-message="pattern">Zip must be five digits</span>
+                </p>
               </div>
             </div>
-          </div>         
+          </div>
         </div>
+
+      </div>
+
+    </div>
+
+    <div class="col-md-6">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h2 class="h4">Billing Info</h2>
+        </div>
+        <div class="panel-body" ng-controller="CustomerCreditCardController" ng-init="setCardholderId(customerId)">
+          <div class="row">
+
+            <!-- Loading Animation -->
+            <div ng-if="!creditCard.$resolved">
+              <div class="col-md-10 col-md-offset-1">
+                <aside class="progress">
+                  <div class="progress-bar progress-bar-striped active"
+                  style="width: 100%">
+                    Loading Credit Card Info ...
+                  </div>
+                </aside>
+              </div>
+            </div>
+
+            <!-- Credit Card Info -->
+            <div ng-if="creditCard.$resolved">
+              <div class="col-md-7">
+                <p class="h4">
+                  ****-****-****-{{creditCard.lastFour}}
+                  <span class="label label-success">
+                    {{creditCard.cardType}}
+                  </span>
+                </p>
+                <p>
+                  <label>Expires:</label>
+                  {{creditCard.expirationMonth}}/{{creditCard.expirationYear}}
+                </p>
+              </div>
+              <div class="col-md-5 text-right">
+                <a href="{{creditCard.detailsLink}}" target="blank" class="btn btn-lg btn-default">
+                  View Details...
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="well well-sm">
+            <header>
+              <h1 class="h5">Billing Address <input type="checkbox"> Same as shipping?</h1>
+            </header>
+            <div class="form-group">
+              <label class="sr-only" for="street-address">
+                Street Address
+              </label>
+              <input type="text" class="form-control" 
+              name="street-address" ng-model="customer.billing_street">
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label class="sr-only" for="city">City</label>
+                  <input type="text" class="form-control"
+                  name="city" ng-model="customer.billing_city">
+                </div>
+              </div>
+              <div class="col-md-2">
+                <div class="form-group">
+                  <label class="sr-only" for="state">State</label>
+                  <input type="text" class="form-control"
+                  name="state" ng-model="customer.billing_state" 
+                  required pattern="[A-Z][A-Z]">
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label class="sr-only" for="zip">Zip</label>
+                  <input type="text" class="form-control"
+                  name="zip" ng-model="customer.billing_zipcode">
+                </div>
+              </div>
+            </div>         
+          </div>
+        </div>
+      </div>
+      <div class="text-right">
+        <button ng-click="save()" 
+                ng-disabled="form.$invalid || form.$pristine"
+                class="btn btn-lg btn-primary">
+          Save Changes
+        </button>
       </div>
     </div>
   </div>
-</div>
+</form>
