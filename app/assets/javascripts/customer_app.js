@@ -74,13 +74,23 @@ app.controller("CustomerDetailController", [
   "$resource",
   function ($scope, $http, $routeParams, $resource) {
     $scope.customerId = $routeParams.id;
-    var Customer = $resource('/customers/:customerId.json');
+    var Customer = $resource('/customers/:customerId.json',
+                            {"customerId": "@customer_id"},
+                            {"save": {"method": "PUT"}});
 
     $scope.customer = Customer.get({ "customerId": $scope.customerId});
 
     $scope.save = function() {
       if ($scope.form.$valid) {
-        alert("Saved!!!");
+        $scope.customer.$save(
+          function () {
+            $scope.form.$setPristine();
+            $scope.form.$setUntouched();
+            alert('Saved');
+          },
+          function () {
+            alert('Saved Failed');
+          })
       }
     }
   }
